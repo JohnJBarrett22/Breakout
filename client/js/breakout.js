@@ -5,8 +5,9 @@ const breakoutGame = () => {
     const ballRadius = 10;
     let x = canvas.width/2;
     let y = canvas.height-30;
-    let dx = 2;
-    let dy = -2;
+    let ballSpeed = 5;
+    let dx = ballSpeed;
+    let dy = -ballSpeed;
     let paddleHeight = 10;
     let paddleWidth = 75;
     let paddleX = (canvas.width-paddleWidth)/2;
@@ -164,8 +165,8 @@ const breakoutGame = () => {
                 else {
                     x = canvas.width/2;
                     y = canvas.height-30;
-                    dx = 2;
-                    dy = -2;
+                    dx = ballSpeed;
+                    dy = -ballSpeed;
                     paddleX = (canvas.width-paddleWidth)/2;
                 }
             }
