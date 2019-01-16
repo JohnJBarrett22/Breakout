@@ -6,9 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="client/css/style.css">
     <title>Breakout</title>
+    <script src="client/js/congrats.js"></script>
+    <script src="client/js/breakout.js"></script>
 </head>
 <body>
-    <canvas id="myCanvas" width="480" height="320"></canvas>
-    <script src="client/js/breakout.js"></script>
+    <div id="gameContainer">
+        <canvas id="myCanvas" width="480" height="320"></canvas>
+    </div>
+    <script>
+        breakoutGame();
+        console.log("starting breakout game!");
+    </script>
 </body>
 </html>
