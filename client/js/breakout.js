@@ -31,26 +31,26 @@ const brickGenerator = () => {
     }
 }
 
-const keyDownHandler = (e) => {
-    if(e.key == "Right" || e.key == "ArrowRight") {
+const keyDownHandler = (event) => {
+    if(event.key == "Right" || event.key == "ArrowRight") {
         rightPressed = true;
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
+    else if(event.key == "Left" || event.key == "ArrowLeft") {
         leftPressed = true;
     }
 }
 
-const keyUpHandler = (e) => {
-    if(e.key == "Right" || e.key == "ArrowRight") {
+const keyUpHandler = (event) => {
+    if(event.key == "Right" || event.key == "ArrowRight") {
         rightPressed = false;
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
+    else if(event.key == "Left" || event.key == "ArrowLeft") {
         leftPressed = false;
     }
 }
 
-const mouseMoveHandler = (e) => {
-    var relativeX = e.clientX - canvas.offsetLeft;
+const mouseMoveHandler = (event) => {
+    let relativeX = event.clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width) {
         paddleX = relativeX - paddleWidth/2;
     }
@@ -61,13 +61,13 @@ document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
 const collisionDetection = () => {
-    for(var c=0; c<brickColumnCount; c++) {
-        for(var r=0; r<brickRowCount; r++) {
-            var b = bricks[c][r];
-            if(b.status == 1) {
-                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+    for(let column = 0; column < brickColumnCount; column++) {
+        for(let row = 0; row < brickRowCount; row++) {
+            let brick = bricks[column][row];
+            if(brick.status == 1) {
+                if(x > brick.x && x < brick.x+brickWidth && y > brick.y && y < brick.y+brickHeight) {
                 dy = -dy;
-                b.status = 0;
+                brick.status = 0;
                 score++;
                 }
                 if(score == brickRowCount*brickColumnCount) {
@@ -96,13 +96,13 @@ const drawPaddle = () => {
 }
 
 const drawBricks = () => {
-    for(var c=0; c<brickColumnCount; c++) {
-        for(var r=0; r<brickRowCount; r++) {
-            if(bricks[c][r].status == 1) {
-                var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
-                var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
-                bricks[c][r].x = brickX;
-                bricks[c][r].y = brickY;
+    for(let column = 0; column < brickColumnCount; column++) {
+        for(let row = 0; row < brickRowCount; row++) {
+            if(bricks[column][row].status == 1) {
+                let brickX = (row*(brickWidth+brickPadding))+brickOffsetLeft;
+                let brickY = (column*(brickHeight+brickPadding))+brickOffsetTop;
+                bricks[column][row].x = brickX;
+                bricks[column][row].y = brickY;
                 ctx.beginPath();
                 ctx.rect(brickX, brickY, brickWidth, brickHeight);
                 ctx.fillStyle = "#0095DD";
