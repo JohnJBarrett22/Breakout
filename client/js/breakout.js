@@ -1,38 +1,37 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var ballRadius = 10;
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-var paddleHeight = 10;
-var paddleWidth = 75;
-var paddleX = (canvas.width-paddleWidth)/2;
-var rightPressed = false;
-var leftPressed = false;
-var brickRowCount = 5;
-var brickColumnCount = 3;
-var brickWidth = 75;
-var brickHeight = 20;
-var brickPadding = 10;
-var brickOffsetTop = 30;
-var brickOffsetLeft = 30;
-var score = 0;
-var lives = 3;
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
+const ballRadius = 10;
+let x = canvas.width/2;
+let y = canvas.height-30;
+let dx = 2;
+let dy = -2;
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX = (canvas.width-paddleWidth)/2;
+let rightPressed = false;
+let leftPressed = false;
+let brickRowCount = 5;
+let brickColumnCount = 3;
+let brickWidth = 75;
+let brickHeight = 20;
+let brickPadding = 10;
+let brickOffsetTop = 30;
+let brickOffsetLeft = 30;
+let score = 0;
+let lives = 3;
 
-var bricks = [];
-for(var c=0; c<brickColumnCount; c++) {
-bricks[c] = [];
-    for(var r=0; r<brickRowCount; r++) {
-        bricks[c][r] = { x: 0, y: 0, status: 1 };
+let bricks = [];
+
+const brickGenerator = () => {
+    for(let c = 0; c < brickColumnCount; c++) {
+        bricks[c] = [];
+        for(let r = 0; r < brickRowCount; r++) {
+            bricks[c][r] = { x: 0, y: 0, status: 1 };
+        }
     }
 }
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("mousemove", mouseMoveHandler, false);
-
-function keyDownHandler(e) {
+const keyDownHandler = (e) => {
     if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = true;
     }
@@ -41,7 +40,7 @@ function keyDownHandler(e) {
     }
 }
 
-function keyUpHandler(e) {
+const keyUpHandler = (e) => {
     if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = false;
     }
@@ -50,14 +49,18 @@ function keyUpHandler(e) {
     }
 }
 
-function mouseMoveHandler(e) {
+const mouseMoveHandler = (e) => {
     var relativeX = e.clientX - canvas.offsetLeft;
     if(relativeX > 0 && relativeX < canvas.width) {
         paddleX = relativeX - paddleWidth/2;
     }
 }
 
-function collisionDetection() {
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+const collisionDetection = () => {
     for(var c=0; c<brickColumnCount; c++) {
         for(var r=0; r<brickRowCount; r++) {
             var b = bricks[c][r];
@@ -76,7 +79,7 @@ function collisionDetection() {
     }
 }
 
-function drawBall() {
+const drawBall = () => {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
     ctx.fillStyle = "#0095DD";
@@ -84,7 +87,7 @@ function drawBall() {
     ctx.closePath();
 }
 
-function drawPaddle() {
+const drawPaddle = () => {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
     ctx.fillStyle = "#0095DD";
@@ -92,7 +95,7 @@ function drawPaddle() {
     ctx.closePath();
 }
 
-function drawBricks() {
+const drawBricks = () => {
     for(var c=0; c<brickColumnCount; c++) {
         for(var r=0; r<brickRowCount; r++) {
             if(bricks[c][r].status == 1) {
@@ -110,19 +113,19 @@ function drawBricks() {
     }
 }
 
-function drawScore() {
+const drawScore = () => {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Score: "+score, 8, 20);
 }
 
-function drawLives() {
+const drawLives = () => {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Lives: "+lives, canvas.width-65, 20);
 }
 
-function draw() {
+const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks();
     drawBall();
@@ -170,4 +173,5 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
+brickGenerator();
 draw();
