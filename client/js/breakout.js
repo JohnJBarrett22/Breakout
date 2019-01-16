@@ -70,12 +70,15 @@ const collisionDetection = () => {
                 brick.status = 0;
                 score++;
                 }
-                if(score == brickRowCount*brickColumnCount) {
-                    alert("YOU WIN, CONGRATS!");
-                    document.location.reload();
-                }
             }
         }
+    }
+}
+
+const gameWin = () => {
+    if(score == brickRowCount*brickColumnCount) {
+        alert("YOU WIN, CONGRATS!");
+        document.location.reload();
     }
 }
 
