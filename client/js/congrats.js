@@ -11,7 +11,6 @@ const displayCongrats = () => {
         // gameContainer.removeChild(congratsText);
     }
 
-
     gameUI.style.display = "none";
     gameContainer.appendChild(congratsText);
 };

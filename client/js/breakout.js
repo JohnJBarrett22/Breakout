@@ -69,7 +69,7 @@ const breakoutGame = () => {
             for(let row = 0; row < brickRowCount; row++) {
                 let brick = bricks[column][row];
                 if(brick.status == 1) {
-                    if(x > brick.x && x < brick.x+brickWidth && y > brick.y && y < brick.y+brickHeight) {
+                    if(x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight) {
                         dy = -dy;
                         brick.status = 0;
                         score++;
@@ -78,12 +78,11 @@ const breakoutGame = () => {
                 }
             }
         }
-
         return isGameOver;
     }
 
     const gameWin = () => {
-        const result = score === brickRowCount*brickColumnCount
+        const result = score === brickRowCount * brickColumnCount
         if (result){
             displayCongrats();
         }
@@ -136,6 +135,19 @@ const breakoutGame = () => {
         ctx.fillText("Lives: "+lives, canvas.width-65, 20);
     }
 
+    const checkGameLost = (lives) => {
+        if (lives < 1) {
+            displayGameOver();
+        }
+        else {
+            x = canvas.width/2;
+            y = canvas.height-30;
+            dx = ballSpeed;
+            dy = -ballSpeed;
+            paddleX = (canvas.width-paddleWidth)/2;
+        }
+    }
+
     const draw = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBricks();
@@ -157,18 +169,7 @@ const breakoutGame = () => {
             }
             else {
                 lives--;
-                if(!lives) {
-                    alert("GAME OVER");
-                    document.location.reload();
-
-                }
-                else {
-                    x = canvas.width/2;
-                    y = canvas.height-30;
-                    dx = ballSpeed;
-                    dy = -ballSpeed;
-                    paddleX = (canvas.width-paddleWidth)/2;
-                }
+                checkGameLost(lives);
             }
         }
 
@@ -182,7 +183,7 @@ const breakoutGame = () => {
         x += dx;
         y += dy;
 
-        if (gameHasBeenWon === false) {
+        if (gameHasBeenWon === false && lives > 0) {
             requestAnimationFrame(draw);
         }
     }
