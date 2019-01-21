@@ -7,8 +7,6 @@ const displayCongrats = () => {
 
     congratsText.onclick = (event) => {
         document.location.reload();
-        // gameUI.style.display = "block";
-        // gameContainer.removeChild(congratsText);
     }
 
     gameUI.style.display = "none";
