@@ -73,8 +73,10 @@ const breakoutGame = () => {
         for(let column = 0; column < brickColumnCount; column++) {
             for(let row = 0; row < brickRowCount; row++) {
                 let brick = bricks[column][row];
-                if(brick.status == 1) {
-                    if(x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight) {
+                let brickIsVisible = brick.status == 1;
+                if(brickIsVisible) {
+                    let ballBrickCollision = x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight;
+                    if(ballBrickCollision) {
                         dy = -dy;
                         brick.status = 0;
                         score++;
@@ -94,18 +96,31 @@ const breakoutGame = () => {
         return result;
     }
 
-    const drawBall = () => {
+    const drawBall = (x, y) => {
         ctx.beginPath();
-        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = "#0095DD";
+        let arcData = [
+            x,
+            y,
+            config.ball.render.arc.radius,
+            config.ball.render.arc.startAngle,
+            config.ball.render.arc.endAngle
+        ]
+        ctx.arc(...arcData);
+        ctx.fillStyle = config.ball.render.fillStyle;
         ctx.fill();
         ctx.closePath();
     }
 
     const drawPaddle = () => {
         ctx.beginPath();
-        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-        ctx.fillStyle = "#0095DD";
+        let rectData = [
+            paddleX,
+            canvas.height-paddleHeight,
+            paddleWidth,
+            paddleHeight
+        ]
+        ctx.rect(...rectData);
+        ctx.fillStyle = config.paddle.render.fillStyle;
         ctx.fill();
         ctx.closePath();
     }
@@ -120,7 +135,7 @@ const breakoutGame = () => {
                     bricks[column][row].y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                    ctx.fillStyle = "#0095DD";
+                    ctx.fillStyle = config.brick.render.fillStyle;
                     ctx.fill();
                     ctx.closePath();
                 }
@@ -140,9 +155,14 @@ const breakoutGame = () => {
     }
 
     const drawLives = () => {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
-        ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+        ctx.font = config.lives.font;
+        ctx.fillStyle = config.lives.style;
+        let livesTextData = [
+            config.lives.livesText.text + lives,
+            config.lives.livesText.x,
+            config.lives.livesText.y
+        ]
+        ctx.fillText(...livesTextData);
     }
 
     const checkGameLost = (lives) => {
@@ -150,31 +170,39 @@ const breakoutGame = () => {
             displayGameOver();
         }
         else {
-            x = canvas.width/2;
-            y = canvas.height-30;
-            dx = ballSpeed;
-            dy = -ballSpeed;
-            paddleX = (canvas.width-paddleWidth)/2;
+            x = config.ball.startX;
+            y = config.ball.startY;
+            dx = config.ball.speed;
+            dy = -config.ball.speed;
+            paddleX = config.paddle.startX;
         }
     }
 
     const draw = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBricks();
-        drawBall();
+        drawBall(x, y);
         drawPaddle();
         drawScore();
         drawLives();
+        
         let gameHasBeenWon = collisionDetection();
+        let ballHitsSideWalls = x + dx > canvas.width-ballRadius || x + dx < ballRadius;
+        let BallHitsTopWall = y + dy < ballRadius;
+        let ballAtBottom = y + dy > canvas.height-ballRadius;
+        let ballWithinPaddle = x > paddleX && x < paddleX + paddleWidth;
+        let movePaddleRight = rightPressed && paddleX < canvas.width-paddleWidth;
+        let movePaddleLeft = leftPressed && paddleX > 0;
 
-        if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        if(ballHitsSideWalls) {
             dx = -dx;
         }
-        if(y + dy < ballRadius) {
+        
+        if(BallHitsTopWall) {
             dy = -dy;
         }
-        else if(y + dy > canvas.height-ballRadius) {
-            if(x > paddleX && x < paddleX + paddleWidth) {
+        else if(ballAtBottom) {
+            if(ballWithinPaddle) {
                 dy = -dy;
             }
             else {
@@ -183,10 +211,10 @@ const breakoutGame = () => {
             }
         }
 
-        if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        if(movePaddleRight) {
             paddleX += 7;
         }
-        else if(leftPressed && paddleX > 0) {
+        else if(movePaddleLeft) {
             paddleX -= 7;
         }
 
