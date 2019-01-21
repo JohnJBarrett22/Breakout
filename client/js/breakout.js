@@ -2,26 +2,26 @@ const breakoutGame = () => {
 
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
-    const ballRadius = 10;
-    let x = canvas.width/2;
-    let y = canvas.height-30;
-    let ballSpeed = 5;
-    let dx = ballSpeed;
-    let dy = -ballSpeed;
-    let paddleHeight = 10;
-    let paddleWidth = 75;
-    let paddleX = (canvas.width-paddleWidth)/2;
+    const ballRadius = config.ball.radius;
+    let x = config.ball.startX;
+    let y = config.ball.startY;
+    let ballSpeed = config.ball.speed;
+    let dx = config.ball.directionalX
+    let dy = -config.ball.directionalY
+    let paddleHeight = config.paddle.height;
+    let paddleWidth = config.paddle.width;
+    let paddleX = config.paddle.startX;
     let rightPressed = false;
     let leftPressed = false;
-    let brickRowCount = 5;
-    let brickColumnCount = 3;
-    let brickWidth = 75;
-    let brickHeight = 20;
-    let brickPadding = 10;
-    let brickOffsetTop = 30;
-    let brickOffsetLeft = 30;
-    let score = 0;
-    let lives = 3;
+    let brickRowCount = config.brick.rowCount;
+    let brickColumnCount = config.brick.columnCount;
+    let brickWidth = config.brick.width;
+    let brickHeight = config.brick.height;
+    let brickPadding = config.brick.padding;
+    let brickOffsetTop = config.brick.offsetTop;
+    let brickOffsetLeft = config.brick.offsetLeft;
+    let score = config.default.score;
+    let lives = config.default.lives;
 
     let bricks = [];
 

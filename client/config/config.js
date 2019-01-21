@@ -1,27 +1,36 @@
-const config = {
-    default: {
+const config = {};
 
-    },
-    loader: {
+config.default = {
+    score: 0,
+    lives: 3
+}
 
-    },
-    init: {
+config.canvas = {
+    width: 480,
+    height: 320
+};
 
-    },
-    boot: {
+config.ball = {
+    radius: 10,
+    startX: config.canvas.width / 2,
+    startY: config.canvas.height - 30,
+    speed: 2,
+    directionalX: 2,
+    directionalY: 2
+};
 
-    },
-    menuState: {
+config.paddle = {
+    width: 75,
+    height: 10,
+    startX: (config.canvas.width - 75) / 2
+};
 
-    },
-    gameLoop: {
-
-    },
-    nuetralMap: {
-
-    },
-    gameOverState: {
-
-    },
-
+config.brick = {
+    rowCount: 5,
+    columnCount: 3,
+    width: 75,
+    height: 20,
+    padding: 10,
+    offsetTop: 30,
+    offsetLeft: 30
 }
