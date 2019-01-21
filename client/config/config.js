@@ -33,4 +33,14 @@ config.brick = {
     padding: 10,
     offsetTop: 30,
     offsetLeft: 30
-}
+};
+
+config.score = {
+    font: "16px Arial",
+    style: "#0095DD",
+    scoreText: {
+        text: "Score: ", 
+        x: 8, 
+        y: 20
+    }
+};

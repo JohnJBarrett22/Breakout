@@ -35,27 +35,32 @@ const breakoutGame = () => {
     }
 
     const keyDownHandler = (event) => {
-        if(event.key == "Right" || event.key == "ArrowRight") {
+        let pressedRight = event.key == "Right" || event.key == "ArrowRight";
+        let pressedLeft = event.key == "Left" || event.key == "ArrowLeft";
+        if(pressedRight) {
             rightPressed = true;
         }
-        else if(event.key == "Left" || event.key == "ArrowLeft") {
+        else if(pressedLeft) {
             leftPressed = true;
         }
     }
 
     const keyUpHandler = (event) => {
-        if(event.key == "Right" || event.key == "ArrowRight") {
+        let unpressedRight = event.key == "Right" || event.key == "ArrowRight";
+        let unpressedLeft = event.key == "Left" || event.key == "ArrowLeft";
+        if(unpressedRight) {
             rightPressed = false;
         }
-        else if(event.key == "Left" || event.key == "ArrowLeft") {
+        else if(unpressedLeft) {
             leftPressed = false;
         }
     }
 
     const mouseMoveHandler = (event) => {
         let relativeX = event.clientX - canvas.offsetLeft;
-        if(relativeX > 0 && relativeX < canvas.width) {
-            paddleX = relativeX - paddleWidth/2;
+        let paddleInBounds = relativeX > 0 && relativeX < canvas.width;
+        if(paddleInBounds) {
+            paddleX = relativeX - paddleWidth / 2;
         }
     }
 
@@ -124,9 +129,14 @@ const breakoutGame = () => {
     }
 
     const drawScore = () => {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
-        ctx.fillText("Score: "+score, 8, 20);
+        ctx.font = config.score.font;
+        ctx.fillStyle = config.score.style;
+        let scoreTextData = [
+            config.score.scoreText.text + score,
+            config.score.scoreText.x,
+            config.score.scoreText.y
+        ];
+        ctx.fillText(...scoreTextData);
     }
 
     const drawLives = () => {
