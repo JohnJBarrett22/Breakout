@@ -1,6 +1,6 @@
 const breakoutGame = () => {
 
-    const canvas = document.getElementById("myCanvas");
+    const canvas = document.getElementById("gameUI");
     const ctx = canvas.getContext("2d");
     const ballRadius = config.ball.radius;
     let x = config.ball.startX;
@@ -172,8 +172,8 @@ const breakoutGame = () => {
         else {
             x = config.ball.startX;
             y = config.ball.startY;
-            dx = config.ball.speed;
-            dy = -config.ball.speed;
+            dx = ballSpeed
+            dy = -ballSpeed;
             paddleX = config.paddle.startX;
         }
     }
