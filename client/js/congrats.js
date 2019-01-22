@@ -1,6 +1,6 @@
 const displayCongrats = () => {
     const gameContainer = document.getElementById("gameContainer");
-    const gameUI = document.getElementById("myCanvas");
+    const gameUI = document.getElementById("gameUI");
 
     let congratsText = document.createElement("h2");
     congratsText.innerHTML = "Congrats! You Won the Game!!";

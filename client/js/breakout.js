@@ -221,7 +221,7 @@ const breakoutGame = () => {
         x += dx;
         y += dy;
 
-        if (gameHasBeenWon === false && lives > 0) {
+        if(gameHasBeenWon === false && lives > 0) {
             requestAnimationFrame(draw);
         }
     }
