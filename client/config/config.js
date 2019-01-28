@@ -7,7 +7,9 @@ config.default = {
 
 config.canvas = {
     width: 480,
-    height: 320
+    height: 320,
+    id: "gameUI",
+    context: "2d"
 };
 
 config.ball = {
@@ -56,8 +58,8 @@ config.score = {
     font: "16px Arial",
     style: "#0095DD",
     scoreText: {
-        text: "Score: ", 
-        x: 8, 
+        text: "Score: ",
+        x: 8,
         y: 20
     }
 };

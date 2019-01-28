@@ -1,7 +1,7 @@
 const breakoutGame = () => {
 
-    const canvas = document.getElementById("gameUI");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById(config.canvas.id);
+    const ctx = canvas.getContext(config.canvas.context);
     const ballRadius = config.ball.radius;
     let x = config.ball.startX;
     let y = config.ball.startY;
@@ -185,7 +185,7 @@ const breakoutGame = () => {
         drawPaddle();
         drawScore();
         drawLives();
-        
+
         let gameHasBeenWon = collisionDetection();
         let ballHitsSideWalls = x + dx > canvas.width-ballRadius || x + dx < ballRadius;
         let BallHitsTopWall = y + dy < ballRadius;
@@ -197,7 +197,7 @@ const breakoutGame = () => {
         if(ballHitsSideWalls) {
             dx = -dx;
         }
-        
+
         if(BallHitsTopWall) {
             dy = -dy;
         }
